@@ -20,8 +20,8 @@ export default {
   getCompletedCommand() {
     return commandAdmin.get("/completedCommand");
   },
-  cancelCommand(id) {
-    return commandAdmin.post("/command/" + id);
+  getOneCommand(id) {
+    return commandAdmin.get("/command/" + id);
   },
   cancelOneItem(id) {
     return commandAdmin.post("/commandItem/" + id);

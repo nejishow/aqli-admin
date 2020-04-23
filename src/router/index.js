@@ -13,6 +13,7 @@ import NewAddress from "../views/address/NewAddress.vue";
 import NewPoint from "../views/address/NewPoint.vue";
 import SupprimerAddress from "../views/address/Supprimer.vue";
 import EnableAddress from "../views/address/EnableAddress.vue";
+import OneCommand from "../views/commands/OneCommand.vue";
 
 Vue.use(VueRouter);
 
@@ -86,6 +87,11 @@ const routes = [
     path: "/commands",
     name: "commands",
     component: Commandes
+  },
+  {
+    path: "/command/:id",
+    name: "command",
+    component: OneCommand
   }
 ];
 

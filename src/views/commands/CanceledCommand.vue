@@ -12,11 +12,19 @@
         v-for="(command, i) in commands"
         :key="i"
       >
-        <v-card>
-          <v-subheader>Commande faite le :{{ command.createdAt }}</v-subheader>
-          <v-subheader
-            >Commande annulée le :{{ command.updatedAt }}</v-subheader
-          >
+        <v-card
+          :to="{
+            path: '/command/' + command._id
+          }"
+        >
+          <div class="d-flex flex-column">
+            <span class="small"
+              >Commande faite le :{{ command.createdAt }}</span
+            >
+            <span class="small"
+              >Commande annulée le :{{ command.updatedAt }}</span
+            >
+          </div>
 
           <v-list-item
             v-for="(item, index) in command.commands"
