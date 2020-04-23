@@ -23,11 +23,22 @@ export default {
   getOneCommand(id) {
     return commandAdmin.get("/command/" + id);
   },
+  deliverCommand(id, code) {
+    return commandAdmin.patch("/command/" + id, {
+      params: code
+    });
+  },
   cancelOneItem(id) {
     return commandAdmin.post("/commandItem/" + id);
   },
   getBack(id) {
-    return commandAdmin.post("/getBack/" + id);
+    return commandAdmin.post("/getBackAdmin/" + id);
+  },
+  getBackComm(id) {
+    return commandAdmin.post("/getBackAdminWithComm/" + id);
+  },
+  noGetBack(id) {
+    return commandAdmin.post("/noGetBackAdmin/" + id);
   },
   supAll(id) {
     return commandAdmin.post("/supCommand/" + id);

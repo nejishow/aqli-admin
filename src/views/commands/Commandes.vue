@@ -16,13 +16,14 @@
           :to="{
             path: '/command/' + command._id
           }"
+          :class="[!command.enabled && !command.received ? 'bg-danger ' : '']"
         >
           <v-subheader>{{ command.createdAt }}</v-subheader>
 
           <v-list-item
             v-for="(item, index) in command.commands"
             :key="index"
-            :class="[item.enabled ? '' : 'bg-danger']"
+            :class="[!item.enabled && !command.received ? 'bg-danger ' : '']"
           >
             <v-list-item-content>
               <v-list-item-title v-text="item.name"></v-list-item-title>
@@ -30,6 +31,20 @@
             <v-list-item-content>
               <v-list-item-title
                 >quantité: {{ item.quantity }}</v-list-item-title
+              >
+            </v-list-item-content>
+            <v-list-item-content>
+              <v-list-item-title
+                v-show="item.wtgb && !item.rendu"
+                class="text-danger h1"
+              >
+                Retour demandé</v-list-item-title
+              >
+              <v-list-item-title
+                v-show="item.wtgb && item.rendu"
+                class="text-danger h1"
+              >
+                Retour effectué</v-list-item-title
               >
             </v-list-item-content>
           </v-list-item>

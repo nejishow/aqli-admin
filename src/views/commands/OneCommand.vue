@@ -1,6 +1,18 @@
 <template>
   <div>
     <v-row>
+      <v-alert
+        :value="alert"
+        close-text="Fermer"
+        color="pink"
+        dark
+        border="top"
+        icon="mdi-home"
+        transition="scale-transition"
+        style="position: fixed; z-index: 999"
+      >
+        <h3>{{ alertMessage }}</h3>
+      </v-alert>
       <v-col sm="12">
         <commandHeader></commandHeader>
       </v-col>
@@ -38,24 +50,50 @@
     </v-row>
     <v-row>
       <v-col sm="12" md="6" v-for="item in command.commands" :key="item._id">
-        <v-card class="d-flex justify-space-between">
-          <div>
-            <v-card-title>{{ item.name }}</v-card-title>
-            <v-card-subtitle>quantité: {{ item.quantity }}</v-card-subtitle>
-            <v-card-text>Prix unitaire: {{ item.price }}</v-card-text>
-            <v-card-text>rendu: {{ item.rendu }}</v-card-text>
-            <v-card-text>veut le rendre: {{ item.wtgb }}</v-card-text>
-            <v-card-text v-show="command.received"
-              >Supprimée: {{ !item.enabled }}</v-card-text
-            >
-            <v-card-text v-show="!command.received"
-              >Annulée: {{ !item.enabled }}</v-card-text
-            >
+        <v-card class="d-flex flex-column">
+          <div class="d-flex justify-space-between m-3">
+            <div>
+              <v-card-title>{{ item.name }}</v-card-title>
+              <v-card-subtitle>quantité: {{ item.quantity }}</v-card-subtitle>
+              <v-card-text>Prix unitaire: {{ item.price }}</v-card-text>
+              <v-card-text>rendu: {{ item.rendu }}</v-card-text>
+              <v-card-text>veut le rendre: {{ item.wtgb }}</v-card-text>
+              <v-card-text>Garantit: {{ item.garantit }}</v-card-text>
+              <v-card-text v-show="command.received"
+                >Supprimée: {{ !item.enabled }}</v-card-text
+              >
+              <v-card-text v-show="!command.received"
+                >Annulée: {{ !item.enabled }}</v-card-text
+              >
+            </div>
+            <div>
+              <v-avatar class="ma-3" size="125" tile>
+                <v-img :src="item.src" :lazy-src="item.src"> </v-img>
+              </v-avatar>
+            </div>
           </div>
-          <div>
-            <v-avatar class="ma-3" size="125" tile>
-              <v-img :src="item.src" :lazy-src="item.src"> </v-img>
-            </v-avatar>
+          <div class="d-flex">
+            <span
+              v-show="item.wtgb && !item.rendu"
+              class="m-3 small border bg-danger text-light text-center"
+              @click="getBack(item._id)"
+            >
+              Recuperé sans Comm
+            </span>
+            <span
+              v-show="item.wtgb && !item.rendu"
+              class="m-3 small border bg-success text-light text-center"
+              @click="getBackComm(item._id)"
+            >
+              Recuperé avec Comm
+            </span>
+            <span
+              v-show="item.wtgb && !item.rendu"
+              class="m-3 small border bg-warning text-center"
+              @click="noGetBack(item._id)"
+            >
+              Non recuperé
+            </span>
           </div>
         </v-card>
       </v-col> </v-row
@@ -73,7 +111,9 @@
             ></v-text-field>
           </v-col>
           <v-col sm="3">
-            <button class="btn btn-group btn-success">Recu</button>
+            <button class="btn btn-group btn-success" @click="livrer">
+              Recu
+            </button>
           </v-col>
         </v-row>
       </v-col>
@@ -92,11 +132,13 @@ export default {
   data() {
     return {
       user: [],
+      alert: false,
+      alertMessage: "",
       command: [],
       code: "",
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
+        v => !!v || "code!!",
+        v => (v && v.length <= 10) || "code ne doit pas depassé 10 lettres"
       ]
     };
   },
@@ -108,6 +150,83 @@ export default {
       });
     });
   },
-  methods: {}
+  methods: {
+    livrer() {
+      commandService
+        .deliverCommand(this.command._id, this.code)
+        .then(() => {
+          this.alertMessage = "Livraison accomplie";
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false;
+            this.$router.go();
+          }, 3000);
+        })
+        .catch(error => {
+          this.alertMessage = error.response.data;
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false;
+          }, 4000);
+        });
+    },
+    getBack(id) {
+      commandService
+        .getBack(id)
+        .then(() => {
+          this.alertMessage = "Produit recuperé";
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false;
+            this.$router.go();
+          });
+        })
+        .catch(error => {
+          this.alertMessage = error.response.data;
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false;
+          }, 4000);
+        });
+    },
+    getBackComm(id) {
+      commandService
+        .getBackComm(id)
+        .then(() => {
+          this.alertMessage = "Produit recuperé";
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false;
+            this.$router.go();
+          });
+        })
+        .catch(error => {
+          this.alertMessage = error.response.data;
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false;
+          }, 4000);
+        });
+    },
+    noGetBack(id) {
+      commandService
+        .noGetBack(id)
+        .then(() => {
+          this.alertMessage = "Operation terminée";
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false;
+            this.$router.go();
+          });
+        })
+        .catch(error => {
+          this.alertMessage = error.response.data;
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false;
+          }, 4000);
+        });
+    }
+  }
 };
 </script>

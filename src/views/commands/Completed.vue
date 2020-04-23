@@ -12,8 +12,15 @@
         v-for="(command, i) in commands"
         :key="i"
       >
-        <v-card>
-          <v-subheader>{{ command.createdAt }}</v-subheader>
+        <v-card
+          :to="{
+            path: '/command/' + command._id
+          }"
+        >
+          <div class="d-flex">
+            <span class="small">Commandé le: {{ command.createdAt }} | </span>
+            <span class="small"> Recu le: {{ command.createdAt }}</span>
+          </div>
 
           <v-list-item
             v-for="(item, index) in command.commands"
