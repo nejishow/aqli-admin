@@ -54,7 +54,7 @@ export const actions = {
       localStorage.getItem("token") !== null &&
       localStorage.getItem("token") !== undefined
     ) {
-      return UserService.getUser()
+      return UserService.getAdmin()
         .then(async response => {
           await commit("SET_USER", response.data);
           await commit("SET_ID", localStorage.getItem("id"));

@@ -12,6 +12,7 @@
           value="true"
           v-for="(address, i) in allAddress"
           :key="i"
+          dense
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -22,6 +23,7 @@
             v-for="(point, index) in address.points"
             :key="index"
             :color="address.enabled ? 'blue' : 'pink'"
+            dense
           >
             <v-list-item>
               <v-list-item-content>

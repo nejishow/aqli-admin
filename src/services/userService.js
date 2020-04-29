@@ -32,5 +32,8 @@ export default {
   },
   getUsers() {
     return apiClient.get("/allUsers");
+  },
+  getAdmin() {
+    return apiClient.get("/users/me");
   }
 };

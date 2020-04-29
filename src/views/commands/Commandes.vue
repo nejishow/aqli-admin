@@ -11,19 +11,25 @@
         value="true"
         v-for="(command, i) in commands"
         :key="i"
+        dense
       >
         <v-card
           :to="{
             path: '/command/' + command._id
           }"
-          :class="[!command.enabled && !command.received ? 'bg-danger ' : '']"
+          :class="comClass(command)"
         >
-          <v-subheader>{{ command.createdAt }}</v-subheader>
+          <v-subheader
+            >Commande effectuée le:
+            {{ new Date(command.createdAt).getDate() }}/{{
+              new Date(command.createdAt).getMonth() + 1
+            }}/{{ new Date(command.createdAt).getFullYear() }}</v-subheader
+          >
 
           <v-list-item
             v-for="(item, index) in command.commands"
             :key="index"
-            :class="[!item.enabled && !command.received ? 'bg-danger ' : '']"
+            :class="itemClass(item)"
           >
             <v-list-item-content>
               <v-list-item-title v-text="item.name"></v-list-item-title>
@@ -35,13 +41,13 @@
             </v-list-item-content>
             <v-list-item-content>
               <v-list-item-title
-                v-show="item.wtgb && !item.rendu"
+                v-if="item.wtgb && !item.rendu"
                 class="text-danger h1"
               >
                 Retour demandé</v-list-item-title
               >
               <v-list-item-title
-                v-show="item.wtgb && item.rendu"
+                v-if="item.wtgb && item.rendu"
                 class="text-danger h1"
               >
                 Retour effectué</v-list-item-title
@@ -80,6 +86,25 @@ export default {
       });
     });
   },
-  methods: {}
+  methods: {
+    comClass(item) {
+      if (item.enabled && item.received) {
+        return "bg-success";
+      }
+      if (!item.enabled && !item.received) {
+        return "bg-danger";
+      }
+      return 0;
+    },
+    itemClass(item) {
+      if (item.wtgb && !item.rendu) {
+        return "bg-warning";
+      }
+      if (item.wtgb && item.rendu) {
+        return "bg-dark";
+      }
+      return 0;
+    }
+  }
 };
 </script>

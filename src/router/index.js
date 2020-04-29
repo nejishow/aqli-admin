@@ -14,7 +14,13 @@ import NewPoint from "../views/address/NewPoint.vue";
 import SupprimerAddress from "../views/address/Supprimer.vue";
 import EnableAddress from "../views/address/EnableAddress.vue";
 import OneCommand from "../views/commands/OneCommand.vue";
-
+import Products from "../views/produits/AllProducts.vue";
+import Product from "../views/produits/OneProduct.vue";
+import NewProduct from "../views/produits/NewProduct.vue";
+import AllCategory from "../views/category/AllCategory.vue";
+import EnableCategory from "../views/category/Enable.vue";
+import NewCategory from "../views/category/NewCategory.vue";
+import SupCategory from "../views/category/Supprimer.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -92,6 +98,41 @@ const routes = [
     path: "/command/:id",
     name: "command",
     component: OneCommand
+  },
+  {
+    path: "/products",
+    name: "products",
+    component: Products
+  },
+  {
+    path: "/product/:id",
+    name: "product",
+    component: Product
+  },
+  {
+    path: "/newProduct",
+    name: "newProduct",
+    component: NewProduct
+  },
+  {
+    path: "/allCategory",
+    name: "allCategory",
+    component: AllCategory
+  },
+  {
+    path: "/enableCategory",
+    name: "enableCategory",
+    component: EnableCategory
+  },
+  {
+    path: "/newCategory",
+    name: "newCategory",
+    component: NewCategory
+  },
+  {
+    path: "/suppCategory",
+    name: "suppCategory",
+    component: SupCategory
   }
 ];
 

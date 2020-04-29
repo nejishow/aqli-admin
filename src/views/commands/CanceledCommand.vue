@@ -11,6 +11,7 @@
         value="true"
         v-for="(command, i) in commands"
         :key="i"
+        dense
       >
         <v-card
           :to="{

@@ -11,6 +11,9 @@
                 v-text="user.address"
               ></v-list-item-subtitle>
             </v-list-item-content>
+            <v-list-item-content>
+              <v-list-item-title v-text="user.number"></v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-col>
