@@ -1,14 +1,14 @@
 import firebase from "firebase/app";
 import "firebase/storage";
 var config = {
-  apiKey: "AIzaSyBK9wXHdgOuhR9CH0R4VCXVaNr4HIuA4SI",
-  authDomain: "aqli-backend.firebaseapp.com",
-  databaseURL: "https://aqli-backend.firebaseio.com",
-  projectId: "aqli-backend",
-  storageBucket: "aqli-backend.appspot.com",
-  messagingSenderId: "796968195430",
-  appId: "1:796968195430:web:f2f567614dc99a5deba4a7",
-  measurementId: "G-FV5865NGCM"
+  apiKey: "AIzaSyDQdCHc1egdH-9lHgkB_7OydIqu1eNjBBU",
+  authDomain: "aqli-admin.firebaseapp.com",
+  databaseURL: "https://aqli-admin.firebaseio.com",
+  projectId: "aqli-admin",
+  storageBucket: "aqli-admin.appspot.com",
+  messagingSenderId: "173666950885",
+  appId: "1:173666950885:web:140293666792d34479be0c",
+  measurementId: "G-48PF2N887K"
 };
 firebase.initializeApp(config);
 const storage = firebase.storage;

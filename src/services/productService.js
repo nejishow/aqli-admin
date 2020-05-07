@@ -1,6 +1,6 @@
 import axios from "axios";
 const productAdmin = axios.create({
-  baseURL: "http://localhost:3000"
+  baseURL: "http://localhost:3000" // https://aqli-ecommerce.herokuapp.com
 });
 productAdmin.interceptors.request.use(config => {
   config.headers.common.Authorization =
@@ -10,6 +10,11 @@ productAdmin.interceptors.request.use(config => {
 export default {
   postProduct(product) {
     return productAdmin.post("/productAdmin", {
+      params: product
+    });
+  },
+  modifyProduct(product) {
+    return productAdmin.post("/productUpdate", {
       params: product
     });
   },

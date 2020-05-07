@@ -13,10 +13,13 @@
         cache-items
         class="mx-4"
         flat
+        item-text="name"
         hide-no-data
         hide-details
         label="Recherche"
         solo-inverted
+        return-object
+        @input="value($event)"
       ></v-autocomplete>
     </v-col>
     <v-col sm="12">
@@ -54,7 +57,7 @@ export default {
   data() {
     return {
       products: [],
-      productNames:[],
+      productNames: [],
       loading: false,
       items: [],
       search: null,
@@ -66,10 +69,10 @@ export default {
       this.products = response.data;
       await this.products.sort((a, b) => {
         if (a.name > b.name) {
-          return -1;
+          return 1;
         }
         if (a.name < b.name) {
-          return 1;
+          return -1;
         }
         return 0;
       });
@@ -84,12 +87,17 @@ export default {
     }
   },
   methods: {
+    value(item) {
+      this.$router.push("/product/" + item._id);
+    },
     querySelections(v) {
       this.loading = true;
       // Simulated ajax query
       setTimeout(() => {
-        this.items = this.productNames.filter(e => {
-          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
+        this.items = this.products.filter(e => {
+          return (
+            (e.name || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1
+          );
         });
         this.loading = false;
       }, 500);

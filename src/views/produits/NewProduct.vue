@@ -125,14 +125,7 @@
                 required
               ></v-text-field>
             </v-col>
-            <v-col sm="12" md="3">
-              <v-text-field
-                v-model="product.serial"
-                :rules="[v => !!v || 'Champ obligatoire']"
-                label="Numero de serie"
-                required
-              ></v-text-field>
-            </v-col>
+            <v-col sm="12" md="3"> </v-col>
           </v-row>
           <v-row>
             <v-col sm="12" md="6">
@@ -187,7 +180,7 @@
           v-show="product.idProductType && product.name !== ''"
         >
           <FirebaseUpload
-            :isProduct="true"
+            :isProductModify="true"
             :product="product"
             :productType="PTvalue"
           ></FirebaseUpload>
@@ -234,8 +227,7 @@ export default {
         description: [],
         idProductType: null,
         keywords: "",
-        garantit: 0,
-        serial: ""
+        garantit: 0
       },
       nameRules: [
         v => !!v || "Champ obligatoire",
@@ -306,7 +298,7 @@ export default {
     addProduct() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.product.pics = []
+        this.product.pics = [];
         this.pictures.forEach(element => {
           this.product.pics.push({ src: element });
         });

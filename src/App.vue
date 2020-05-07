@@ -43,6 +43,11 @@
             <v-list-item-title>Categories</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item v-if="getId" router exact to="/banner">
+          <v-list-item-content>
+            <v-list-item-title>Banner</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item v-if="!getId" router exact to="/login">
           <v-list-item-content>
             <v-list-item-title>Connection</v-list-item-title>

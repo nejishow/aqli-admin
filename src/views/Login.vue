@@ -22,7 +22,7 @@
           <input
             id="password"
             v-model="loginForm.password"
-            type="text"
+            type="password"
             class="form-control"
             placeholder="mot de passe"
           />

@@ -21,6 +21,7 @@ export default {
   props: [
     "isBanner",
     "isProduct",
+    "isProductM",
     "isProductType",
     "product",
     "productType",
@@ -41,7 +42,7 @@ export default {
       if (this.isProductType) {
         return "Enregistrer la photo d'un type de produit";
       }
-      return "test";
+      return "Enregistrer une banniere";
     }
   },
   methods: {
@@ -91,6 +92,45 @@ export default {
               });
           });
       }
+      if (this.isProductM) {
+        categoryService
+          .getOneSubCategory(this.productType[0].idSubCategory)
+          .then(async response => {
+            await categoryService
+              .getOnecategory(response.data.idCategory)
+              .then(async res => {
+                const storageRef = firebase
+                  .storage()
+                  .ref(
+                    res.data.name +
+                      "/" +
+                      response.data.name +
+                      "/" +
+                      this.productType[0].name +
+                      "/" +
+                      this.product.name +
+                      "/" +
+                      this.imageData.name
+                  )
+                  .put(this.imageData);
+                storageRef.on(
+                  "state_changed",
+                  snapshot => {
+                    this.uploadValue =
+                      (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                  },
+                  error => {
+                    console.log(error.message);
+                  },
+                  () => {
+                    storageRef.snapshot.ref.getDownloadURL().then(url => {
+                      this.$emit("newImg", url);
+                    });
+                  }
+                );
+              });
+          });
+      }
       if (this.isProductType) {
         categoryService
           .getOneSubCategory(this.productType.idSubCategory)
@@ -132,6 +172,28 @@ export default {
                 );
               });
           });
+      }
+      if (this.isBanner) {
+        const storageRef = firebase
+          .storage()
+          .ref("Banner/" + this.imageData.name)
+          .put(this.imageData);
+        storageRef.on(
+          "state_changed",
+          snapshot => {
+            this.uploadValue =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          },
+          error => {
+            console.log(error.message);
+          },
+          () => {
+            storageRef.snapshot.ref.getDownloadURL().then(url => {
+              console.log(url);
+              this.$store.dispatch("setSrc", url);
+            });
+          }
+        );
       }
     }
   }

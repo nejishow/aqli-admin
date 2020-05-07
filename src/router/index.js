@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Users from "../views/users/Users.vue";
 import Commandes from "../views/commands/Commandes.vue";
+import Banner from "../views/Banner.vue";
 import NewCommand from "../views/commands/NewCommand.vue";
 import CanceledCommand from "../views/commands/CanceledCommand.vue";
 import Completed from "../views/commands/Completed.vue";
@@ -133,6 +134,11 @@ const routes = [
     path: "/suppCategory",
     name: "suppCategory",
     component: SupCategory
+  },
+  {
+    path: "/banner",
+    name: "banner",
+    component: Banner
   }
 ];
 

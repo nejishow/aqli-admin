@@ -1,6 +1,6 @@
 import axios from "axios";
 const commandAdmin = axios.create({
-  baseURL: "http://localhost:3000"
+  baseURL: "https://aqli-ecommerce.herokuapp.com"
 });
 commandAdmin.interceptors.request.use(config => {
   config.headers.common.Authorization =

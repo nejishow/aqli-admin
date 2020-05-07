@@ -1,6 +1,6 @@
 import axios from "axios";
 const categoryAdmin = axios.create({
-  baseURL: "http://localhost:3000"
+  baseURL: "https://aqli-ecommerce.herokuapp.com"
 });
 categoryAdmin.interceptors.request.use(config => {
   config.headers.common.Authorization =
@@ -26,16 +26,16 @@ export default {
   addOneCategory(cat) {
     return categoryAdmin.post("/category", {
       params: cat
-    })
+    });
   },
   addOneSub(sub) {
     return categoryAdmin.post("/subCategory", {
       params: sub
-    })
+    });
   },
   addOneProd(prod) {
     return categoryAdmin.post("/productType", {
       params: prod
-    })
+    });
   }
 };
