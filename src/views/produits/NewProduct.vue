@@ -180,7 +180,7 @@
           v-show="product.idProductType && product.name !== ''"
         >
           <FirebaseUpload
-            :isProductModify="true"
+            :isProduct="true"
             :product="product"
             :productType="PTvalue"
           ></FirebaseUpload>
