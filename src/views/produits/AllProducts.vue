@@ -1,10 +1,23 @@
 <template>
-  <v-row>
-    <v-col sm="12">
+  <div class="row">
+    <div class="col-sm-12">
       <productHeader></productHeader>
-    </v-col>
-    <v-col sm="12">Tous les produits</v-col>
-    <v-col sm="12" md="6">
+    </div>
+    <div class="col-sm-12">Tous les produits</div>
+    <div class="col-sm-4 col-md-2">
+      <v-btn @click="tout" small>Tous</v-btn>
+    </div>
+    <div class="col-sm-8 col-md-4">
+      <v-select
+        item-text="name"
+        item-value="_id"
+        :items="allBoutique"
+        v-model="boutique"
+        label="Boutique"
+        placeholder="Tous"
+      ></v-select>
+    </div>
+    <div class="col-sm-12 col-md-6">
       <v-autocomplete
         v-model="select"
         :loading="loading"
@@ -21,30 +34,35 @@
         return-object
         @input="value($event)"
       ></v-autocomplete>
-    </v-col>
-    <v-col sm="12">
+    </div>
+    <div class="col-sm-12">
       <v-list
         no-action
         sub-group
         value="true"
-        v-for="(product, i) in products"
+        v-for="(product, i) in choice"
         :key="i"
         dense
       >
-        <v-card>
-          <v-list-item
-            :to="{
-              path: '/product/' + product._id
-            }"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="product.name"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
+        <v-list-item
+          :to="{
+            path: '/product/' + product._id
+          }"
+          class="border-bottom"
+        >
+          <v-avatar tile width="200" height="200">
+            <v-img :src="product.pics[0].src"></v-img>
+          </v-avatar>
+          <v-list-item-content>
+            <v-list-item-title v-text="product.name"></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title v-text="product.price"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
-    </v-col>
-  </v-row>
+    </div>
+  </div>
 </template>
 <script>
 import productService from "../../services/productService.js";
@@ -58,6 +76,8 @@ export default {
     return {
       products: [],
       productNames: [],
+      allBoutique: [],
+      boutique: "",
       loading: false,
       items: [],
       search: null,
@@ -80,13 +100,30 @@ export default {
         this.productNames.push(element.name);
       });
     });
+    productService.getAllBoutique().then(res => {
+      this.allBoutique = res.data;
+    });
   },
   watch: {
     search(val) {
       val && val !== this.select && this.querySelections(val);
     }
   },
+  computed: {
+    choice() {
+      if (this.boutique !== "") {
+        var items = this.products.filter(product => {
+          return product.owner == this.boutique;
+        });
+        return items;
+      }
+      return this.products;
+    }
+  },
   methods: {
+    tout() {
+      this.boutique = "";
+    },
     value(item) {
       this.$router.push("/product/" + item._id);
     },
