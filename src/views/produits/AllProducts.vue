@@ -50,6 +50,9 @@
           }"
           class="border-bottom"
         >
+          <v-list-item-content>
+            <v-list-item-title v-text="i + 1"></v-list-item-title>
+          </v-list-item-content>
           <v-avatar tile width="200" height="200">
             <v-img :src="product.pics[0].src"></v-img>
           </v-avatar>
